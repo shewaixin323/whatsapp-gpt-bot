@@ -37,7 +37,12 @@ def verify_webhook():
 @app.route("/webhook", methods=["POST"])
 def receive_message():
 
+    print("========== WEBHOOK POST RECEIVED ==========")
+
     data = request.get_json()
+
+    print("PAYLOAD:")
+    print(data)
 
     print("====================")
     print("收到 WhatsApp webhook")
