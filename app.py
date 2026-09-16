@@ -8,6 +8,8 @@ VERIFY_TOKEN = os.environ.get("VERIFY_TOKEN")
 WHATSAPP_TOKEN = os.environ.get("WHATSAPP_TOKEN")
 PHONE_NUMBER_ID = os.environ.get("PHONE_NUMBER_ID")
 
+print("VERIFY_TOKEN:", VERIFY_TOKEN)
+
 
 @app.route("/", methods=["GET"])
 def home():
@@ -32,30 +34,30 @@ def receive_message():
 
     data = request.get_json()
 
-    print("收到消息:")
+    print("WhatsApp webhook received:")
     print(data)
 
     try:
- message = data["entry"][0]["changes"][0]["value"]["messages"][0]
 
-    from_number = message["from"]
-    text = message["text"]["body"]
+        message = data["entry"][0]["changes"][0]["value"]["messages"][0]
 
-    print("用户:", from_number)
-    print("内容:", text)
+        from_number = message["from"]
+        text = message["text"]["body"]
 
-    print("准备回复用户")
+        print("用户:", from_number)
+        print("内容:", text)
 
-    send_message(
-        from_number,
-        "收到你的消息：" + text
-    )
+        print("准备回复用户")
+
+        send_message(
+            from_number,
+            "收到你的消息：" + text
+        )
 
     except Exception as e:
         print("错误:", e)
 
     return "EVENT_RECEIVED", 200
-
 
 
 def send_message(to, text):
@@ -82,9 +84,7 @@ def send_message(to, text):
         json=data
     )
 
-    print("发送结果:")
-    print(response.text)
-
+    print("发送结果:", response.text)
 
 
 if __name__ == "__main__":
