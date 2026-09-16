@@ -36,18 +36,20 @@ def receive_message():
     print(data)
 
     try:
-        message = data["entry"][0]["changes"][0]["value"]["messages"][0]
+ message = data["entry"][0]["changes"][0]["value"]["messages"][0]
 
-        from_number = message["from"]
-        text = message["text"]["body"]
+    from_number = message["from"]
+    text = message["text"]["body"]
 
-        print("用户:", from_number)
-        print("内容:", text)
+    print("用户:", from_number)
+    print("内容:", text)
 
-        send_message(
-            from_number,
-            "收到你的消息：" + text
-        )
+    print("准备回复用户")
+
+    send_message(
+        from_number,
+        "收到你的消息：" + text
+    )
 
     except Exception as e:
         print("错误:", e)
